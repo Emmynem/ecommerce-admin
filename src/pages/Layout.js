@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Logo from '../assets/images/logo-white.jpg';
+import Logo from '../assets/images/logo-white.png';
 import Category from '../icons/Category';
 import Swap from '../icons/Swap';
 import Team from '../icons/Team';
