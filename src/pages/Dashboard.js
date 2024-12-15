@@ -120,7 +120,7 @@ export default function Dashboard() {
 						<div className='xui-d-grid xui-grid-col-1 xui-lg-grid-col-3 xui-grid-gap-1 xui-lg-grid-gap-2 xui-mb-2'>
 							<div className='xui-bg-pos-center xui-bg-sz-cover xui-bdr-rad-half xui-overflow-hidden' style={{ backgroundImage: `url(${PatternImage})` }}>
 								<div className='xui-py-1 xui-px-2 xui-overlay xui-h-fluid-100'>
-									<h3 className='xui-font-sz-180 xui-font-w-normal'>{analytics ? (analytics.data.product_views_sum[0].total_views ? analytics.data.product_views_sum[0].total_views.toLocaleString() : "None") : <Loading width="12" height="12" />}</h3>
+									<h3 className='xui-font-sz-180 xui-font-w-normal'>{analytics ? (analytics.data.product_views_sum[0].total_views ? parseInt(analytics.data.product_views_sum[0].total_views).toLocaleString() : "None") : <Loading width="12" height="12" />}</h3>
 									<span className='xui-font-sz-90'>Product Views</span>
 								</div>
 							</div>

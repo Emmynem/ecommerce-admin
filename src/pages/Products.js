@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import SuccessTick from "../assets/images/success-tick.png";
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
@@ -16,8 +17,9 @@ import { config } from "../config";
 import { getCategories } from "../api/categories";
 import { getProducts, getProductsViaCategory, getProduct, searchProducts } from "../api/products";
 import { 
-	useAddProduct, useDeleteProduct, useDeleteProductImage, useUpdateProductCategory, useUpdateProductDescription, useUpdateProductName, 
-	useUpdateProductPrices, useUpdateProductSpecification, useUpdateProductStock, useUploadProductImages
+	useDeleteProduct, useDeleteProductImage, useUploadProductImages,
+	// useAddProduct, useUpdateProductCategory, useUpdateProductDescription, useUpdateProductName, 
+	// useUpdateProductPrices, useUpdateProductSpecification, useUpdateProductStock, 
 } from "../hooks/useProducts";
 import Loading from "../icons/Loading";
 import Filter from "../icons/Filter";
@@ -35,48 +37,48 @@ export default function Products() {
 
 	const [currentFunction, setCurrentFunction] = useState("getAllProducts");
 
-	const {
-		categoryUniqueId, description, errorAddProduct, handleAddProduct, handleCategoryUniqueId, handleDescription, handleMaxQuantity, 
-		handleName, handlePrice, handleQuantity, handleSalesPrice, handleSpecification, loadingAddProduct, maxQuantity, name, price, 
-		productUniqueId, quantity, removeAddProductModal, salesPrice, setCategoryUniqueId, setDescription, setMaxQuantity, setName, setPrice, 
-		setQuantity, setRemoveAddProductModal, setSalesPrice, setSpecification, specification, successAddProduct
-	} = useAddProduct();
+	// const {
+	// 	categoryUniqueId, description, errorAddProduct, handleAddProduct, handleCategoryUniqueId, handleDescription, handleMaxQuantity, 
+	// 	handleName, handlePrice, handleQuantity, handleSalesPrice, handleSpecification, loadingAddProduct, maxQuantity, name, price, 
+	// 	productUniqueId, quantity, removeAddProductModal, salesPrice, setCategoryUniqueId, setDescription, setMaxQuantity, setName, setPrice, 
+	// 	setQuantity, setRemoveAddProductModal, setSalesPrice, setSpecification, specification, successAddProduct
+	// } = useAddProduct();
 
 	const {
 		errorProductImages, handleUploadProductImages, loadingProductImages, removeProductImagesModal, selectedProductImages, setRemoveProductImagesModal, 
 		setSelectedProductImages, setUniqueId: UploadProductImagesSetProductUniqueId, successProductImages, uniqueId: UploadProductImagesProductUniqueId, uploadingProductImagesPercentage
 	} = useUploadProductImages();
 
-	const {
-		categoryUniqueId: UpdateProductCategoryUniqueId, errorUpdateProductCategory, handleCategoryUniqueId: UpdateProductHandleCategoryUniqueId, handleUpdateProductCategory, 
-		loadingUpdateProductCategory, removeUpdateProductCategoryModal, setCategoryUniqueId: UpdateProductCategorySetCategoryUniqueId, setRemoveUpdateProductCategoryModal, 
-		setUniqueId: UpdateProductCategorySetUniqueId, successUpdateProductCategory
-	} = useUpdateProductCategory();
+	// const {
+	// 	categoryUniqueId: UpdateProductCategoryUniqueId, errorUpdateProductCategory, handleCategoryUniqueId: UpdateProductHandleCategoryUniqueId, handleUpdateProductCategory, 
+	// 	loadingUpdateProductCategory, removeUpdateProductCategoryModal, setCategoryUniqueId: UpdateProductCategorySetCategoryUniqueId, setRemoveUpdateProductCategoryModal, 
+	// 	setUniqueId: UpdateProductCategorySetUniqueId, successUpdateProductCategory
+	// } = useUpdateProductCategory();
 
-	const {
-		name: UpdateProductName, errorUpdateProductName, handleName: UpdateProductHandleName, handleUpdateProductName, loadingUpdateProductName, 
-		removeUpdateProductNameModal, setName: UpdateProductSetName, setRemoveUpdateProductNameModal, setUniqueId: UpdateProductNameSetUniqueId, successUpdateProductName
-	} = useUpdateProductName();
+	// const {
+	// 	name: UpdateProductName, errorUpdateProductName, handleName: UpdateProductHandleName, handleUpdateProductName, loadingUpdateProductName, 
+	// 	removeUpdateProductNameModal, setName: UpdateProductSetName, setRemoveUpdateProductNameModal, setUniqueId: UpdateProductNameSetUniqueId, successUpdateProductName
+	// } = useUpdateProductName();
 
-	const {
-		description: UpdateProductDescription, errorUpdateProductDescription, handleDescription: UpdateProductHandleDescription, handleUpdateProductDescription, loadingUpdateProductDescription, 
-		removeUpdateProductDescriptionModal, setDescription: UpdateProductSetDescription, setRemoveUpdateProductDescriptionModal, setUniqueId: UpdateProductDescriptionSetUniqueId, successUpdateProductDescription
-	} = useUpdateProductDescription();
+	// const {
+	// 	description: UpdateProductDescription, errorUpdateProductDescription, handleDescription: UpdateProductHandleDescription, handleUpdateProductDescription, loadingUpdateProductDescription, 
+	// 	removeUpdateProductDescriptionModal, setDescription: UpdateProductSetDescription, setRemoveUpdateProductDescriptionModal, setUniqueId: UpdateProductDescriptionSetUniqueId, successUpdateProductDescription
+	// } = useUpdateProductDescription();
 
-	const {
-		specification: UpdateProductSpecification, errorUpdateProductSpecification, handleSpecification: UpdateProductHandleSpecification, handleUpdateProductSpecification, loadingUpdateProductSpecification, 
-		removeUpdateProductSpecificationModal, setSpecification: UpdateProductSetSpecification, setRemoveUpdateProductSpecificationModal, setUniqueId: UpdateProductSpecificationSetUniqueId, successUpdateProductSpecification
-	} = useUpdateProductSpecification();
+	// const {
+	// 	specification: UpdateProductSpecification, errorUpdateProductSpecification, handleSpecification: UpdateProductHandleSpecification, handleUpdateProductSpecification, loadingUpdateProductSpecification, 
+	// 	removeUpdateProductSpecificationModal, setSpecification: UpdateProductSetSpecification, setRemoveUpdateProductSpecificationModal, setUniqueId: UpdateProductSpecificationSetUniqueId, successUpdateProductSpecification
+	// } = useUpdateProductSpecification();
 
-	const {
-		price: UpdateProductPrice, salesPrice: UpdateProductSalesPrice, errorUpdateProductPrices, handlePrice: UpdateProductHandlePrice, handleSalesPrice: UpdateProductHandleSalesPrice, handleUpdateProductPrices, loadingUpdateProductPrices, 
-		removeUpdateProductPricesModal, setPrice: UpdateProductSetPrice, setSalesPrice: UpdateProductSetSalesPrice, setRemoveUpdateProductPricesModal, setUniqueId: UpdateProductPricesSetUniqueId, successUpdateProductPrices
-	} = useUpdateProductPrices();
+	// const {
+	// 	price: UpdateProductPrice, salesPrice: UpdateProductSalesPrice, errorUpdateProductPrices, handlePrice: UpdateProductHandlePrice, handleSalesPrice: UpdateProductHandleSalesPrice, handleUpdateProductPrices, loadingUpdateProductPrices, 
+	// 	removeUpdateProductPricesModal, setPrice: UpdateProductSetPrice, setSalesPrice: UpdateProductSetSalesPrice, setRemoveUpdateProductPricesModal, setUniqueId: UpdateProductPricesSetUniqueId, successUpdateProductPrices
+	// } = useUpdateProductPrices();
 
-	const {
-		quantity: UpdateProductQuantity, maxQuantity: UpdateProductMaxQuantity, errorUpdateProductStock, handleQuantity: UpdateProductHandleQuantity, handleMaxQuantity: UpdateProductHandleMaxQuantity, handleUpdateProductStock, loadingUpdateProductStock, 
-		removeUpdateProductStockModal, setQuantity: UpdateProductSetQuantity, setMaxQuantity: UpdateProductSetMaxQuantity, setRemoveUpdateProductStockModal, setUniqueId: UpdateProductStockSetUniqueId, successUpdateProductStock
-	} = useUpdateProductStock();
+	// const {
+	// 	quantity: UpdateProductQuantity, maxQuantity: UpdateProductMaxQuantity, errorUpdateProductStock, handleQuantity: UpdateProductHandleQuantity, handleMaxQuantity: UpdateProductHandleMaxQuantity, handleUpdateProductStock, loadingUpdateProductStock, 
+	// 	removeUpdateProductStockModal, setQuantity: UpdateProductSetQuantity, setMaxQuantity: UpdateProductSetMaxQuantity, setRemoveUpdateProductStockModal, setUniqueId: UpdateProductStockSetUniqueId, successUpdateProductStock
+	// } = useUpdateProductStock();
 
 	const {
 		errorDeleteProduct, handleDeleteProduct, loadingDeleteProduct, removeDeleteProductModal, setRemoveDeleteProductModal, uniqueId: DeleteProductUniqueId, setUniqueId: DeleteProductSetUniqueId, successDeleteProduct
@@ -294,14 +296,14 @@ export default function Products() {
 		const response = await getProduct(cookie, { unique_id });
 		if (!response.err) {
 			setViewProduct(response.data);
-			UpdateProductCategorySetCategoryUniqueId(response.data.data.category_unique_id);
-			UpdateProductSetName(response.data.data.name);
-			UpdateProductSetDescription(response.data.data.description);
-			UpdateProductSetSpecification(response.data.data.specification);
-			UpdateProductSetPrice(response.data.data.price);
-			UpdateProductSetSalesPrice(response.data.data.sales_price);
-			UpdateProductSetQuantity(response.data.data.quantity);
-			UpdateProductSetMaxQuantity(response.data.data.max_quantity);
+			// UpdateProductCategorySetCategoryUniqueId(response.data.data.category_unique_id);
+			// UpdateProductSetName(response.data.data.name);
+			// UpdateProductSetDescription(response.data.data.description);
+			// UpdateProductSetSpecification(response.data.data.specification);
+			// UpdateProductSetPrice(response.data.data.price);
+			// UpdateProductSetSalesPrice(response.data.data.sales_price);
+			// UpdateProductSetQuantity(response.data.data.quantity);
+			// UpdateProductSetMaxQuantity(response.data.data.max_quantity);
 			setSelectedImage(response.data.data.product_images && response.data.data.product_images.length > 0 ? response.data.data.product_images[0].image : "");
 			setThumbnailImages(response.data.data.product_images && response.data.data.product_images.length > 0 ? response.data.data.product_images.map(image => image.image) : []);
 		} else { setErrorViewProduct(response.response_code === 422 ? response.error.response.data.data.data[0].msg : response.error.response.data.message) }
@@ -320,23 +322,23 @@ export default function Products() {
 		callLastProductFunction();
 		setRemoveSearchProductModal(null);
 	}
-	if (removeAddProductModal) {
-		const modalResponse = document.querySelector("#addProductModal");
-		modalResponse.setAttribute("display", false);
-		callLastProductFunction();
-		setRemoveAddProductModal(null);
-	}
-	if (removeUpdateProductCategoryModal || removeUpdateProductNameModal || removeUpdateProductDescriptionModal || removeUpdateProductPricesModal || removeUpdateProductStockModal) {
-		// const modalResponse = document.querySelector("#editProductModal");
-		// modalResponse.setAttribute("display", false);
-		// callLastProductFunction();
-		setRemoveUpdateProductCategoryModal(null);
-		setRemoveUpdateProductNameModal(null);
-		setRemoveUpdateProductDescriptionModal(null);
-		setRemoveUpdateProductSpecificationModal(null);
-		setRemoveUpdateProductPricesModal(null);
-		setRemoveUpdateProductStockModal(null);
-	}
+	// if (removeAddProductModal) {
+	// 	const modalResponse = document.querySelector("#addProductModal");
+	// 	modalResponse.setAttribute("display", false);
+	// 	callLastProductFunction();
+	// 	setRemoveAddProductModal(null);
+	// }
+	// if (removeUpdateProductCategoryModal || removeUpdateProductNameModal || removeUpdateProductDescriptionModal || removeUpdateProductPricesModal || removeUpdateProductStockModal) {
+	// 	// const modalResponse = document.querySelector("#editProductModal");
+	// 	// modalResponse.setAttribute("display", false);
+	// 	// callLastProductFunction();
+	// 	setRemoveUpdateProductCategoryModal(null);
+	// 	setRemoveUpdateProductNameModal(null);
+	// 	setRemoveUpdateProductDescriptionModal(null);
+	// 	setRemoveUpdateProductSpecificationModal(null);
+	// 	setRemoveUpdateProductPricesModal(null);
+	// 	setRemoveUpdateProductStockModal(null);
+	// }
 	if (removeProductImagesModal) {
 		// const modalResponse = document.querySelector("#viewProductImagesModal");
 		// modalResponse.setAttribute("display", false);
@@ -395,10 +397,10 @@ export default function Products() {
 							</div>
 							<div className="xui-mb-1">
 								<div className='xui-d-inline-flex'>
-									<button className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-80" xui-modal-open="addProductModal">
+									<Link to={`/internal/product/add`} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-80">
 										<span className="xui-mr-half">Add Product</span>
 										<Plus width="15" height="15" />
-									</button>
+									</Link>
 								</div>
 							</div>
 							<div className="xui-mb-1">
@@ -523,15 +525,9 @@ export default function Products() {
 																		}} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewProductModal">
 																		<EyeOpenAlt width="20" height="20" />
 																	</button>
-																	<button title="Edit Product" onClick={() => {
-																		UpdateProductCategorySetUniqueId(data.unique_id);
-																		UpdateProductNameSetUniqueId(data.unique_id);
-																		UpdateProductDescriptionSetUniqueId(data.unique_id);
-																		UpdateProductSpecificationSetUniqueId(data.unique_id);
-																		UpdateProductPricesSetUniqueId(data.unique_id);
-																		UpdateProductStockSetUniqueId(data.unique_id); getAProduct(data.unique_id) }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="editProductModal">
+																	<Link to={`/internal/product/edit/details?unique_id=${data.unique_id}`} className="xui-text-dc-none xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50">
 																		<Edit width="20" height="20" />
-																	</button>
+																	</Link>
 																	<button title="Product Images"
 																		onClick={() => {
 																			UploadProductImagesSetProductUniqueId(data.unique_id);
@@ -883,7 +879,7 @@ export default function Products() {
 					</div>
 				</div>
 			</section>
-			<section className='xui-modal' xui-modal="addProductModal" id="addProductModal">
+			{/* <section className='xui-modal' xui-modal="addProductModal" id="addProductModal">
 				<div className='xui-modal-content xui-max-h-700 xui-max-w-1100 xui-overflow-auto xui-pos-relative'>
 					<div className="xui-w-40 xui-h-40 xui-bdr-rad-circle xui-d-flex xui-flex-ai-center xui-flex-jc-center psc-bg xui-text-white psc-modal-close" xui-modal-close="addProductModal">
 						<Close width="24" height="24" />
@@ -956,8 +952,8 @@ export default function Products() {
 					<p className="xui-font-sz-100 xui-my-1 xui-text-center xui-text-red"><span className="xui-font-w-bold psc-text-red">{errorAddProduct}</span></p>
 					<p className="xui-font-sz-100 xui-my-1 xui-text-center xui-text-green"><span className="xui-font-w-bold psc-text-red">{successAddProduct}</span></p>
 				</div>
-			</section>
-			<section className='xui-modal' xui-modal="editProductModal" id="editProductModal">
+			</section> */}
+			{/* <section className='xui-modal' xui-modal="editProductModal" id="editProductModal">
 				<div className='xui-modal-content xui-max-h-700 xui-max-w-1100 xui-overflow-auto xui-pos-relative'>
 					<div className="xui-w-40 xui-h-40 xui-bdr-rad-circle xui-d-flex xui-flex-ai-center xui-flex-jc-center psc-bg xui-text-white psc-modal-close" xui-modal-close="editProductModal">
 						<Close width="24" height="24" />
@@ -1112,7 +1108,7 @@ export default function Products() {
 						</div>
 					</form>
 				</div>
-			</section>
+			</section> */}
 			<section className='xui-modal' xui-modal="deleteProductModal" id="deleteProductModal">
 				<div className='xui-modal-content xui-max-h-500 xui-overflow-auto xui-pos-relative'>
 					<center>

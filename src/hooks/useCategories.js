@@ -18,7 +18,7 @@ const useAddCategory = () => {
 	const [successAddCategory, setSuccessAddCategory] = useState(null);
 
 	const allowed_extensions = ["image/png", "image/PNG", "image/jpg", "image/JPG", "image/jpeg", "image/JPEG", "image/webp", "image/WEBP"];
-	const maximum_file_size = 20 * 1024 * 1024;
+	const maximum_file_size = 10 * 1024 * 1024;
 
 	const filterBytes = (bytes) => {
 		if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '0 bytes';
@@ -51,7 +51,7 @@ const useAddCategory = () => {
 					setErrorAddCategory(null);
 				}, 2000)
 			} else if (selectedAddCategory.size > maximum_file_size) {
-				setErrorAddCategory("File too large (max 20mb)");
+				setErrorAddCategory("File too large (max 10mb)");
 				setTimeout(function () {
 					setErrorAddCategory(null);
 				}, 2000)
@@ -240,7 +240,7 @@ const useUploadCategoryImage = () => {
 	const [successCategoryImage, setSuccessCategoryImage] = useState(null);
 
 	const allowed_extensions = ["image/png", "image/PNG", "image/jpg", "image/JPG", "image/jpeg", "image/JPEG", "image/webp", "image/WEBP"];
-	const maximum_file_size = 20 * 1024 * 1024;
+	const maximum_file_size = 10 * 1024 * 1024;
 
 	const filterBytes = (bytes) => {
 		if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '0 bytes';
@@ -266,7 +266,7 @@ const useUploadCategoryImage = () => {
 					setErrorCategoryImage(null);
 				}, 2000)
 			} else if (selectedCategoryImage.size > maximum_file_size) {
-				setErrorCategoryImage("File too large (max 20mb)");
+				setErrorCategoryImage("File too large (max 10mb)");
 				setTimeout(function () {
 					setErrorCategoryImage(null);
 				}, 2000)

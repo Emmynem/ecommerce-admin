@@ -146,7 +146,7 @@ export default function Layout() {
                                 <span>Orders</span>
                             </div>
                         </Link>
-                        <Link to={`/internal/products`} className={"xui-text-inherit link-box xui-font-sz-90 xui-opacity-6 " + (loc.pathname === `/internal/products` ? 'active' : '')}>
+                        <Link to={`/internal/products`} className={"xui-text-inherit link-box xui-font-sz-90 xui-opacity-6 " + (loc.pathname === `/internal/products` || loc.pathname === `/internal/product/add` || loc.pathname === `/internal/product/edit/details` ? 'active' : '')}>
                             <div className="icon">
                                 <ShoppingBag width="20" height="20" />
                             </div>

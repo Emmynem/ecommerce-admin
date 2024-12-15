@@ -23,6 +23,10 @@ export default function Headertext() {
         return "Favorites"
     } else if (loc.pathname === `/internal/products`) {
         return "Products"
+    } else if (loc.pathname === `/internal/product/add`) {
+        return "Add Product"
+    } else if (loc.pathname === `/internal/product/edit/details`) {
+        return "Edit Product"
     } else if (loc.pathname === `/internal/transactions`) {
         return "Transactions";
     } else if (loc.pathname === `/internal/settings`) {

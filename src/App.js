@@ -14,6 +14,8 @@ import Categories from "./pages/Categories";
 import Disputes from "./pages/Disputes";
 import Favorites from "./pages/Favorites";
 import Products from "./pages/Products";
+import AddProduct from "./pages/AddProduct";
+import EditProductDetails from "./pages/EditProductDetails";
 import AppDefaults from "./pages/AppDefaults";
 
 export default function App(){
@@ -77,6 +79,16 @@ export default function App(){
             !cookie || cookie === '' || cookie === '[object Object]' ?
              (<Navigate replace to={"/signin"} />) :
              (<Products />)
+          } />
+          <Route path="product/add" element={
+            !cookie || cookie === '' || cookie === '[object Object]' ?
+             (<Navigate replace to={"/signin"} />) :
+             (<AddProduct />)
+          } />
+          <Route path="product/edit/details" element={
+            !cookie || cookie === '' || cookie === '[object Object]' ?
+              (<Navigate replace to={"/signin"} />) :
+              (<EditProductDetails />)
           } />
           {/* <Route path="settings" element={
             !cookie || cookie === '' || cookie === '[object Object]' ?

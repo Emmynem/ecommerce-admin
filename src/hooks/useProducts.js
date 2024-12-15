@@ -28,8 +28,8 @@ const useAddProduct = () => {
 
 	const handleCategoryUniqueId = (e) => { e.preventDefault(); setCategoryUniqueId(e.target.value); };
 	const handleName = (e) => { e.preventDefault(); setName(e.target.value); };
-	const handleDescription = (e) => { e.preventDefault(); setDescription(e.target.value); };
-	const handleSpecification = (e) => { e.preventDefault(); setSpecification(e.target.value); };
+	const handleDescription = (contents) => { setDescription(contents); };
+	const handleSpecification = (contents) => { setSpecification(contents); };
 	const handleQuantity = (e) => { e.preventDefault(); setQuantity(e.target.value); };
 	const handleMaxQuantity = (e) => { e.preventDefault(); setMaxQuantity(e.target.value); };
 	const handlePrice = (e) => { e.preventDefault(); setPrice(e.target.value); };
@@ -356,7 +356,7 @@ const useUpdateProductDescription = () => {
 	const [errorUpdateProductDescription, setErrorUpdateProductDescription] = useState(null);
 	const [successUpdateProductDescription, setSuccessUpdateProductDescription] = useState(null);
 
-	const handleDescription = (e) => { e.preventDefault(); setDescription(e.target.value); };
+	const handleDescription = (contents) => { setDescription(contents); };
 
 	const handleUpdateProductDescription = (e) => {
 		e.preventDefault();
@@ -440,7 +440,7 @@ const useUpdateProductSpecification = () => {
 	const [errorUpdateProductSpecification, setErrorUpdateProductSpecification] = useState(null);
 	const [successUpdateProductSpecification, setSuccessUpdateProductSpecification] = useState(null);
 
-	const handleSpecification = (e) => { e.preventDefault(); setSpecification(e.target.value); };
+	const handleSpecification = (contents) => { setSpecification(contents); };
 
 	const handleUpdateProductSpecification = (e) => {
 		e.preventDefault();
@@ -712,7 +712,7 @@ const useUploadProductImages = () => {
 	const [successProductImages, setSuccessProductImages] = useState(null);
 
 	const allowed_extensions = ["image/png", "image/PNG", "image/jpg", "image/JPG", "image/jpeg", "image/JPEG", "image/webp", "image/WEBP"];
-	const maximum_file_size = 20 * 1024 * 1024;
+	const maximum_file_size = 10 * 1024 * 1024;
 
 	const filterBytes = (bytes) => {
 		if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '0 bytes';
@@ -725,10 +725,34 @@ const useUploadProductImages = () => {
 		e.preventDefault();
 
 		if (!loadingProductImages) {
+			const files = document.getElementById('productImages').files;
+
+			let fileSizeFlag = 0;
+			let fileTypeFlag = 0;
+			for (let i = 0; i < files.length; i++) {
+				fileSizeFlag = files[i].size > maximum_file_size ? 1 : fileSizeFlag;
+				fileTypeFlag = !allowed_extensions.includes(files[i].type) ? 1 : fileTypeFlag;
+			}
+
 			if (!uniqueId) {
 				setErrorProductImages(null);
 				setSuccessProductImages(null);
 				setErrorProductImages("Unique ID is required");
+				setTimeout(function () {
+					setErrorProductImages(null);
+				}, 2000)
+			} else if (files.length > 10) {
+				setErrorProductImages("Max 10 files");
+				setTimeout(function () {
+					setErrorProductImages(null);
+				}, 2000)
+			} else if (fileTypeFlag) {
+				setErrorProductImages("Some images have invalid image format (accepted - .png, .jpg, .jpeg, .heic, .avif & .webp)");
+				setTimeout(function () {
+					setErrorProductImages(null);
+				}, 2000)
+			} else if (fileSizeFlag) {
+				setErrorProductImages("Some images are too large (max 10mb)");
 				setTimeout(function () {
 					setErrorProductImages(null);
 				}, 2000)
@@ -747,7 +771,6 @@ const useUploadProductImages = () => {
 			else {
 				setLoadingProductImages(true);
 
-				const files = document.getElementById('productImages').files;
 				const formdata = new FormData();
 				formdata.append("file_path", "products");
 				for (let i = 0; i < files.length; i++) {
