@@ -13,7 +13,7 @@ import Cancel from "../icons/Cancel";
 import Copy from "../icons/Copy";
 import useCookie from "../hooks/useCookie";
 import { config } from "../config";
-import { getDisputes, getDisputesViaUser, getDispute } from "../api/disputes";
+import { getDisputes, getDisputesViaOrder, getDispute } from "../api/disputes";
 import { useAcceptOrderDispute, useDenyOrderDispute } from "../hooks/useOrders";
 import Loading from "../icons/Loading";
 import Filter from "../icons/Filter";
@@ -40,8 +40,8 @@ export default function Disputes() {
 		successDenyOrderDispute, feedback, handleFeedback, setFeedback
 	} = useDenyOrderDispute();
 
-	const [filterByUserUniqueId, setFilterByUserUniqueId] = useState("");
-	const [removeUserFilterModal, setRemoveUserFilterModal] = useState(null);
+	const [filterByOrderUniqueId, setFilterByOrderUniqueId] = useState("");
+	const [removeOrderFilterModal, setRemoveOrderFilterModal] = useState(null);
 
 	const showPreview = function (file) {
 		const preview = file;
@@ -56,23 +56,23 @@ export default function Disputes() {
 	const [size, setSize] = useState(50);
 	const [page, setPage] = useState(1);
 
-	const handleFilterByUserUniqueId = (e) => { e.preventDefault(); setFilterByUserUniqueId(e.target.value); };
+	const handleFilterByOrderUniqueId = (e) => { e.preventDefault(); setFilterByOrderUniqueId(e.target.value); };
 
 	const handleSize = (e) => { e.preventDefault(); setSize(e.target.value); setPage(1); disputesBySize(e.target.value); };
 	const handlePage = (e) => { e.preventDefault(); setPage(parseInt(e.target.value)); disputesByPage(parseInt(e.target.value), size); };
 
-	const resetUserFilterParameters = () => {
-		setFilterByUserUniqueId("");
+	const resetOrderFilterParameters = () => {
+		setFilterByOrderUniqueId("");
 		setCurrentFunction("getAllDisputes");
 	};
 
-	const continueUserFilterByUser = (e) => {
+	const continueFilterByOrder = (e) => {
 		e.preventDefault();
 
 		setPage(1);
-		setCurrentFunction("getAllUserDisputes");
-		getAllUserDisputes(filterByUserUniqueId, page, size);
-		setRemoveUserFilterModal(true);
+		setCurrentFunction("getAllOrderDisputes");
+		getAllOrderDisputes(filterByOrderUniqueId, page, size);
+		setRemoveOrderFilterModal(true);
 	};
 
 	async function callLastDisputeFunction() {
@@ -80,8 +80,8 @@ export default function Disputes() {
 			case "getAllDisputes":
 				getAllDisputes(page, size);
 				break;
-			case "getAllUserDisputes":
-				getAllUserDisputes(filterByUserUniqueId, page, size);
+			case "getAllOrderDisputes":
+				getAllOrderDisputes(filterByOrderUniqueId, page, size);
 				break;
 			// default:
 			// 	getAllDisputes(page, size);
@@ -93,8 +93,8 @@ export default function Disputes() {
 			case "getAllDisputes":
 				getAllDisputes(page, size);
 				break;
-			case "getAllUserDisputes":
-				getAllUserDisputes(filterByUserUniqueId, page, size);
+			case "getAllOrderDisputes":
+				getAllOrderDisputes(filterByOrderUniqueId, page, size);
 				break;
 			default:
 				getAllDisputes(page, size);
@@ -106,8 +106,8 @@ export default function Disputes() {
 			case "getAllDisputes":
 				getAllDisputes(page, size);
 				break;
-			case "getAllUserDisputes":
-				getAllUserDisputes(filterByUserUniqueId, page, size);
+			case "getAllOrderDisputes":
+				getAllOrderDisputes(filterByOrderUniqueId, page, size);
 				break;
 			default:
 				getAllDisputes(page, size);
@@ -121,8 +121,8 @@ export default function Disputes() {
 				case "getAllDisputes":
 					getAllDisputes(page - 1, size);
 					break;
-				case "getAllUserDisputes":
-					getAllUserDisputes(filterByUserUniqueId, page - 1, size);
+				case "getAllOrderDisputes":
+					getAllOrderDisputes(filterByOrderUniqueId, page - 1, size);
 					break;
 				default:
 					getAllDisputes(page - 1, size);
@@ -137,8 +137,8 @@ export default function Disputes() {
 				case "getAllDisputes":
 					getAllDisputes(page + 1, size);
 					break;
-				case "getAllUserDisputes":
-					getAllUserDisputes(filterByUserUniqueId, page + 1, size);
+				case "getAllOrderDisputes":
+					getAllOrderDisputes(filterByOrderUniqueId, page + 1, size);
 					break;
 				default:
 					getAllDisputes(page + 1, size);
@@ -154,9 +154,9 @@ export default function Disputes() {
 		setLoadingAllDisputes(false);
 	};
 
-	async function getAllUserDisputes(user_unique_id, _page, _size) {
+	async function getAllOrderDisputes(order_unique_id, _page, _size) {
 		setLoadingAllDisputes(true);
-		const response = await getDisputesViaUser(cookie, (_page || page), (_size || size), ({ user_unique_id: user_unique_id }));
+		const response = await getDisputesViaOrder(cookie, (_page || page), (_size || size), ({ order_unique_id: order_unique_id }));
 		setAllDisputes(response.data);
 		if (response.error) setErrorDisputes(response.response_code !== 422 ? response.error.response.data.message : response.error.response.data.data[0].msg);
 		setLoadingAllDisputes(false);
@@ -183,11 +183,11 @@ export default function Disputes() {
 		setLoadingViewDispute(false)
 	};
 
-	if (removeUserFilterModal) {
-		const modalResponse = document.querySelector("#filterByUser");
+	if (removeOrderFilterModal) {
+		const modalResponse = document.querySelector("#filterByOrder");
 		modalResponse.setAttribute("display", false);
 		callLastDisputeFunction();
-		setRemoveUserFilterModal(null);
+		setRemoveOrderFilterModal(null);
 	}
 
 	if (removeAcceptOrderDisputeModal) {
@@ -236,7 +236,7 @@ export default function Disputes() {
 							</div>
 							<div className="xui-mb-1">
 								<div className='xui-d-inline-flex'>
-									<button className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-80" xui-modal-open="filterByUser">
+									<button className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-80" xui-modal-open="filterByOrder">
 										<span className="xui-mr-half">Search</span>
 										<Search width="15" height="15" />
 									</button>
@@ -423,16 +423,16 @@ export default function Disputes() {
 					</section>
 				</Content>
 			</Screen>
-			<section className='xui-modal' xui-modal="filterByUser" id="filterByUser">
+			<section className='xui-modal' xui-modal="filterByOrder" id="filterByOrder">
 				<div className='xui-modal-content xui-max-h-700 xui-overflow-auto xui-pos-relative'>
-					<div className="xui-w-40 xui-h-40 xui-bdr-rad-circle xui-d-flex xui-flex-ai-center xui-flex-jc-center psc-bg xui-text-white psc-modal-close" onClick={() => resetUserFilterParameters()} xui-modal-close="filterByUser">
+					<div className="xui-w-40 xui-h-40 xui-bdr-rad-circle xui-d-flex xui-flex-ai-center xui-flex-jc-center psc-bg xui-text-white psc-modal-close" onClick={() => resetOrderFilterParameters()} xui-modal-close="filterByOrder">
 						<Close width="24" height="24" />
 					</div>
-					<h1>Filter Disputes By User</h1>
-					<form className="xui-form" onSubmit={continueUserFilterByUser}>
+					<h1>Filter Disputes By Order</h1>
+					<form className="xui-form" onSubmit={continueFilterByOrder}>
 						<div className="xui-form-box">
-							<label>User Unique Id</label>
-							<input className="xui-font-sz-90" type="text" value={filterByUserUniqueId} onChange={handleFilterByUserUniqueId} required placeholder="Enter/Paste User Unique Id"></input>
+							<label>Order Unique Id</label>
+							<input className="xui-font-sz-90" type="text" value={filterByOrderUniqueId} onChange={handleFilterByOrderUniqueId} required placeholder="Enter/Paste Order Unique Id"></input>
 						</div>
 						<div className="xui-form-box xui-d-flex xui-flex-jc-flex-end">
 							<button className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-70">
@@ -508,6 +508,14 @@ export default function Disputes() {
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Product Price -</span> USD {viewDispute.data.order.product.sales_price ? <>{viewDispute.data.order.product.sales_price.toLocaleString()} <s> USD {viewDispute.data.order.product.price.toLocaleString()}</s> </> : viewDispute.data.order.product.price.toLocaleString()}</p>
 												<hr></hr>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half" style={{ textDecoration: "underline" }}>Order Details: </p>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Unique Id - </span> 
+													<div className='xui-d-inline-flex xui-flex-ai-center'>
+														<span> {viewDispute.data.order.unique_id}</span>
+														<span title="Copy Dispute ID" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(viewDispute.data.order.unique_id); setTextCopied(viewDispute.data.order.unique_id); }}>
+															{copiedText && textCopied === viewDispute.data.order.unique_id ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
+														</span>
+													</div>
+												</p>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Tracking Number -</span> {viewDispute.data.order.tracking_number}</p>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Shipping Fee -</span> USD {viewDispute.data.order.shipping_fee.toLocaleString()}</p>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Quantity -</span> {viewDispute.data.order.quantity.toLocaleString()}</p>
@@ -528,33 +536,33 @@ export default function Disputes() {
 														<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
 														<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
 												}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Delivery Status -</span>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Delivery Status - </span>
 													{
-														viewDispute.data.delivery_status === "Completed" || viewDispute.data.delivery_status === "Paid" || viewDispute.data.delivery_status === "Shipped" || viewDispute.data.delivery_status === "Refunded" ?
-															<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.delivery_status}</span> : ""
+														viewDispute.data.order.delivery_status === "Completed" || viewDispute.data.order.delivery_status === "Paid" || viewDispute.data.order.delivery_status === "Shipped" || viewDispute.data.order.delivery_status === "Refunded" ?
+															<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.order.delivery_status}</span> : ""
 													}
 													{
-														viewDispute.data.delivery_status === "Processing" || viewDispute.data.delivery_status === "Disputed" ?
-															<span className='xui-badge xui-badge-warning xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.delivery_status}</span> : ""
+														viewDispute.data.order.delivery_status === "Processing" || viewDispute.data.order.delivery_status === "Disputed" ?
+															<span className='xui-badge xui-badge-warning xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.order.delivery_status}</span> : ""
 													}
 													{
-														viewDispute.data.delivery_status === "Shipping" || viewDispute.data.delivery_status === "Received" || viewDispute.data.delivery_status === "Refund" ?
-															<span className='xui-badge xui-badge-info xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.delivery_status}</span> : ""
+														viewDispute.data.order.delivery_status === "Shipping" || viewDispute.data.order.delivery_status === "Received" || viewDispute.data.order.delivery_status === "Refund" ?
+															<span className='xui-badge xui-badge-info xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.order.delivery_status}</span> : ""
 													}
 													{
-														viewDispute.data.delivery_status === "Cancelled" || viewDispute.data.delivery_status === "Refund Denied" ?
-															<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.delivery_status}</span> : ""
+														viewDispute.data.order.delivery_status === "Cancelled" || viewDispute.data.order.delivery_status === "Refund Denied" ?
+															<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>{viewDispute.data.order.delivery_status}</span> : ""
 													}
 												</p>
-												<p className="xui-opacity-4 xui-font-sz-90 xui-m-half"><span className="xui-font-w-bold">Created</span> - {viewDispute.data.order.createdAt}</p>
-												<p className="xui-opacity-4 xui-font-sz-90 xui-m-half"><span className="xui-font-w-bold">Last Updated</span> - {viewDispute.data.order.updatedAt}</p>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Created</span> - {viewDispute.data.order.createdAt}</p>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Last Updated</span> - {viewDispute.data.order.updatedAt}</p>
 												<hr></hr>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half" style={{ textDecoration: "underline" }}>Message: </p>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">{viewDispute.data.message}</p>
 											</div>
 										</div>
 										<center>
-											<p className="xui-opacity-4 xui-font-sz-90 xui-m-half">Created - {viewDispute.data.createdAt} | Last Updated - {viewDispute.data.updatedAt}</p>
+											<p className="xui-opacity-4 xui-font-sz-100 xui-py-half">Created - {viewDispute.data.createdAt} | Last Updated - {viewDispute.data.updatedAt}</p>
 											{/* {
 												viewDispute.data.order.delivery_status === "Refund" ? 
 													<div className="xui-m-2">

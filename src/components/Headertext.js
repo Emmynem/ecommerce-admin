@@ -19,6 +19,8 @@ export default function Headertext() {
         return "Categories"
     } else if (loc.pathname === `/internal/disputes`) {
         return "Disputes"
+    } else if (loc.pathname === `/internal/ratings`) {
+        return "Ratings"
     } else if (loc.pathname === `/internal/favorites`) {
         return "Favorites"
     } else if (loc.pathname === `/internal/products`) {

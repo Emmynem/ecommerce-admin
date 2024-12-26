@@ -130,6 +130,14 @@ export default function Layout() {
                                 <span>Disputes</span>
                             </div>
                         </Link>
+                        <Link to={`/internal/ratings`} className={"xui-text-inherit link-box xui-font-sz-90 xui-opacity-6 " + (loc.pathname === `/internal/ratings` ? 'active' : '')}>
+                            <div className="icon">
+                                <Rating width="20" height="20" />
+                            </div>
+                            <div className="name xui-ml-half">
+                                <span>Ratings</span>
+                            </div>
+                        </Link>
                         {/* <Link to={`/internal/favorites`} className={"xui-text-inherit link-box xui-font-sz-90 xui-opacity-6 " + (loc.pathname === `/internal/favorites` ? 'active' : '')}>
                             <div className="icon">
                                 <Love width="20" height="20" />

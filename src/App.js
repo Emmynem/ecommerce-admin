@@ -12,6 +12,7 @@ import Orders from "./pages/Orders";
 import Carts from "./pages/Carts";
 import Categories from "./pages/Categories";
 import Disputes from "./pages/Disputes";
+import Ratings from "./pages/Ratings";
 import Favorites from "./pages/Favorites";
 import Products from "./pages/Products";
 import AddProduct from "./pages/AddProduct";
@@ -69,6 +70,11 @@ export default function App(){
             !cookie || cookie === '' || cookie === '[object Object]' ?
              (<Navigate replace to={"/signin"} />) :
              (<Disputes />)
+          } />
+          <Route path="ratings" element={
+            !cookie || cookie === '' || cookie === '[object Object]' ?
+             (<Navigate replace to={"/signin"} />) :
+             (<Ratings />)
           } />
           <Route path="favorites" element={
             !cookie || cookie === '' || cookie === '[object Object]' ?

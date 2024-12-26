@@ -17,7 +17,7 @@ const getDisputes = async function (key, page, size) {
 	}
 };
 
-const getDisputesViaUser = async function (key, page, size, payload) {
+const getDisputesViaOrder = async function (key, page, size, payload) {
 	try {
 		const response = await axios.get(
 			`${config.baseAPIurl}/root/disputes/via/order?page=${page}&size=${size}&order_unique_id=${payload.order_unique_id}`,
@@ -49,4 +49,4 @@ const getDispute = async function (key, payload) {
 	}
 };
 
-export { getDisputes, getDisputesViaUser, getDispute };
+export { getDisputes, getDisputesViaOrder, getDispute };
