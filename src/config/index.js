@@ -3,7 +3,7 @@ const {
 } = require("../hidden.json");
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-const baseAPIurl = "https://api.commerce.q-ctrls.com";
+const baseAPIurl = "https://api.computehaven.com";
 // const baseAPIurl = "http://localhost:831"; // for test
 const clouderUrl = "https://api.clouder.xnyder.com";
 
