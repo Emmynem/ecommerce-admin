@@ -97,7 +97,7 @@ export default function Layout() {
                             <div className="name xui-ml-half">
                                 <span>App Defaults</span>
                             </div>
-                        </Link>
+                        </Link> */}
                         <Link to={`/internal/banners`} className={"xui-text-inherit link-box xui-font-sz-90 xui-opacity-6 " + (loc.pathname === `/internal/banners` ? 'active' : '')}>
                             <div className="icon">
                                 <Image width="20" height="20" />
@@ -105,7 +105,7 @@ export default function Layout() {
                             <div className="name xui-ml-half">
                                 <span>Banners</span>
                             </div>
-                        </Link> */}
+                        </Link>
                         <Link to={`/internal/categories`} className={"xui-text-inherit link-box xui-font-sz-90 xui-opacity-6 " + (loc.pathname === `/internal/categories` ? 'active' : '')}>
                             <div className="icon">
                                 <Category width="20" height="20" />
