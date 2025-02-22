@@ -9,6 +9,7 @@ import Users from "./pages/Users";
 import SignIn from "./pages/auth/SignIn";
 import ApiKeys from "./pages/ApiKeys";
 import Orders from "./pages/Orders";
+import Banners from "./pages/Banners";
 import Carts from "./pages/Carts";
 import Categories from "./pages/Categories";
 import Disputes from "./pages/Disputes";
@@ -56,6 +57,11 @@ export default function App(){
               (<Navigate replace to={"/signin"} />) :
               (<Users />)
           } /> */}
+          <Route path="banners" element={
+            !cookie || cookie === '' || cookie === '[object Object]' ?
+             (<Navigate replace to={"/signin"} />) :
+             (<Banners />)
+          } />
           <Route path="carts" element={
             !cookie || cookie === '' || cookie === '[object Object]' ?
              (<Navigate replace to={"/signin"} />) :
