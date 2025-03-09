@@ -212,8 +212,8 @@ export default function Ratings() {
 		const response = await getRating(cookie, { unique_id });
 		if (!response.err) {
 			setViewRating(response.data);
-			setSelectedImage(response.data.data.order.product.product_images ? response.data.data.order.product.product_images[0].image : "");
-			setThumbnailImages(response.data.data.order.product.product_images ? response.data.data.order.product.product_images.map(image => image.image) : []);
+			setSelectedImage(response.data.data.product.product_images ? response.data.data.product.product_images[0].image : "");
+			setThumbnailImages(response.data.data.product.product_images ? response.data.data.product.product_images.map(image => image.image) : []);
 		} else { setErrorViewRating(response.response_code === 422 ? response.error.response.data.data[0].msg : response.error.response.data.message) }
 		setLoadingViewRating(false)
 	};
@@ -367,48 +367,71 @@ export default function Ratings() {
 																}
 															</td>
 															<td className='xui-opacity-5'>
-																<div className='xui-d-inline-flex xui-flex-ai-center'>
-																	<span>{data.order.tracking_number}</span>
-																	<span title="Copy Tracking Number" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(data.order.tracking_number); setTextCopied(data.order.tracking_number); }}>
-																		{copiedText && textCopied === (data.order.tracking_number) ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
-																	</span>
-																</div>
+																{
+																	data.order ? 
+																		<div className='xui-d-inline-flex xui-flex-ai-center'>
+																			<span>{data.order.tracking_number}</span>
+																			<span title="Copy Tracking Number" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(data.order.tracking_number); setTextCopied(data.order.tracking_number); }}>
+																				{copiedText && textCopied === (data.order.tracking_number) ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
+																			</span>
+																		</div> : <span>No Data</span>
+																}
 															</td>
 															<td className='xui-opacity-5'>
-																<span>{data.order.contact_fullname}</span>
+																{
+																	data.order ? 
+																		<span>{data.order.contact_fullname}</span>
+																		: <span>No Data</span>
+																}
 															</td>
 															<td className='xui-opacity-5'>
-																<span>{data.order.contact_email}</span>
+																{
+																	data.order ? 
+																		<span>{data.order.contact_email}</span>
+																		: <span>No Data</span>
+																} 
 															</td>
 															<td className='xui-opacity-5'>
-																<span>{data.order.product.category.name}</span>
+																<span>{data.product.category.name}</span>
 															</td>
 															<td className='xui-opacity-5'>
-																<span>{data.order.product.name} ({data.order.product.remaining}/{data.order.product.quantity})</span>
+																<span>{data.product.name} ({data.product.remaining}/{data.product.quantity})</span>
 															</td>
 															<td className=''>
 																{
-																	data.order.product.product_images === null || !data.order.product.product_images ?
+																	data.product.product_images === null || !data.product.product_images ?
 																		<span>No image</span> :
 																		<div className='xui-d-inline-flex xui-flex-ai-center'>
-																			<img className="xui-img-50" src={data.order.product.product_images[0].image} alt="Category Image" />
-																			<span title="Copy Image Link" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(data.order.product.product_images[0].image); setTextCopied(data.order.product.product_images[0].image); }}>
-																				{copiedText && textCopied === data.order.product.product_images[0].image ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
+																			<img className="xui-img-50" src={data.product.product_images[0].image} alt="Category Image" />
+																			<span title="Copy Image Link" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(data.product.product_images[0].image); setTextCopied(data.product.product_images[0].image); }}>
+																				{copiedText && textCopied === data.product.product_images[0].image ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
 																			</span>
-																			<span title="View File" className="xui-cursor-pointer xui-mx-1" onClick={() => { showPreview(data.order.product.product_images[0].image); }}>
+																			<span title="View File" className="xui-cursor-pointer xui-mx-1" onClick={() => { showPreview(data.product.product_images[0].image); }}>
 																				<EyeOpen width="16" height="16" />
 																			</span>
 																		</div>
 																}
 															</td>
 															<td className='xui-opacity-5'>
-																<span>{data.order.quantity.toLocaleString()}</span>
+																{
+																	data.order ? 
+																		<span>{data.order.quantity.toLocaleString()}</span>
+																		: <span>No Data</span>
+																} 
 															</td>
 															<td className='xui-opacity-5'>
-																<span>{data.order.amount === 0 ? "Free" : "USD " + data.order.amount.toLocaleString()}</span>
+																{
+																	data.order ? 
+																		<span>{data.order.amount === 0 ? "Free" : "USD " + data.order.amount.toLocaleString()}</span>
+																		: <span>No Data</span>
+																}
 															</td>
 															<td className='xui-opacity-5'>
-																<span>{data.order.shipping_fee ? data.order.shipping_fee === 0 ? "Free" : "USD " + data.order.shipping_fee.toLocaleString() : "No shipping fee"}</span>
+																{
+																	data.order ? 
+																		<span>{data.order.shipping_fee ? data.order.shipping_fee === 0 ? "Free" : "USD " + data.order.shipping_fee.toLocaleString() : "No shipping fee"}</span>
+																		: <span>No Data</span>
+																} 
 															</td>
 															<td className=''>
 																{
@@ -562,9 +585,9 @@ export default function Ratings() {
 										<div className="xui-d-grid xui-grid-col-1 xui-lg-grid-col-2 xui-md-grid-col-2 xui-grid-gap-1">
 											<div className="xui-w-200 xui-h-200 xui-m-1-half xui-mb-6">
 												{/* {
-													viewRating.data.order.product.product_images === null || !viewRating.data.order.product.product_images ?
+													viewRating.data.product.product_images === null || !viewRating.data.product.product_images ?
 														<center>No image</center> :
-														<img className="xui-img-200 xui-max-h-200" src={viewRating.data.order.product.product_images[0].image} alt={viewRating.data.order.product.name + " Image"} />
+														<img className="xui-img-200 xui-max-h-200" src={viewRating.data.product.product_images[0].image} alt={viewRating.data.product.name + " Image"} />
 												} */}
 												{
 													viewRating.data.user ?
@@ -601,59 +624,65 @@ export default function Ratings() {
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half" style={{ textDecoration: "underline" }}>Description: </p>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">{viewRating.data.description}</p>
 												<hr></hr>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Category -</span> {viewRating.data.order.product.category.name}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Product -</span> {viewRating.data.order.product.name}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Product Price -</span> USD {viewRating.data.order.product.sales_price ? <>{viewRating.data.order.product.sales_price.toLocaleString()} <s> USD {viewRating.data.order.product.price.toLocaleString()}</s> </> : viewRating.data.order.product.price.toLocaleString()}</p>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Category -</span> {viewRating.data.product.category.name}</p>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Product -</span> {viewRating.data.product.name}</p>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Product Price -</span> USD {viewRating.data.product.sales_price ? <>{viewRating.data.product.sales_price.toLocaleString()} <s> USD {viewRating.data.product.price.toLocaleString()}</s> </> : viewRating.data.product.price.toLocaleString()}</p>
 												<hr></hr>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half" style={{ textDecoration: "underline" }}>Order Details: </p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Unique Id - </span>
-													<div className='xui-d-inline-flex xui-flex-ai-center'>
-														<span> {viewRating.data.order.unique_id}</span>
-														<span title="Copy Rating ID" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(viewRating.data.order.unique_id); setTextCopied(viewRating.data.order.unique_id); }}>
-															{copiedText && textCopied === viewRating.data.order.unique_id ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
-														</span>
-													</div>
-												</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Tracking Number -</span> {viewRating.data.order.tracking_number}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Shipping Fee -</span> USD {viewRating.data.order.shipping_fee.toLocaleString()}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Quantity -</span> {viewRating.data.order.quantity.toLocaleString()}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Amount -</span> USD {viewRating.data.order.amount.toLocaleString()}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Payment Method -</span> {viewRating.data.order.payment_method}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Paid -</span> {
-													viewRating.data.order.paid ?
-														<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
-														<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
-												}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Shipped -</span> {
-													viewRating.data.order.shipped ?
-														<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
-														<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
-												}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Ratingd -</span> {
-													viewRating.data.order.ratingd ?
-														<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
-														<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
-												}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Delivery Status - </span>
-													{
-														viewRating.data.order.delivery_status === "Completed" || viewRating.data.order.delivery_status === "Paid" || viewRating.data.order.delivery_status === "Shipped" || viewRating.data.order.delivery_status === "Refunded" ?
-															<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
-													}
-													{
-														viewRating.data.order.delivery_status === "Processing" || viewRating.data.order.delivery_status === "Ratingd" ?
-															<span className='xui-badge xui-badge-warning xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
-													}
-													{
-														viewRating.data.order.delivery_status === "Shipping" || viewRating.data.order.delivery_status === "Received" || viewRating.data.order.delivery_status === "Refund" ?
-															<span className='xui-badge xui-badge-info xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
-													}
-													{
-														viewRating.data.order.delivery_status === "Cancelled" || viewRating.data.order.delivery_status === "Refund Denied" ?
-															<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
-													}
-												</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Created</span> - {viewRating.data.order.createdAt}</p>
-												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Last Updated</span> - {viewRating.data.order.updatedAt}</p>
+												{
+													viewRating.data.order ?
+														<>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half" style={{ textDecoration: "underline" }}>Order Details: </p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Unique Id - </span>
+																<div className='xui-d-inline-flex xui-flex-ai-center'>
+																	<span> {viewRating.data.order.unique_id}</span>
+																	<span title="Copy Rating ID" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(viewRating.data.order.unique_id); setTextCopied(viewRating.data.order.unique_id); }}>
+																		{copiedText && textCopied === viewRating.data.order.unique_id ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
+																	</span>
+																</div>
+															</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Tracking Number -</span> {viewRating.data.order.tracking_number}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Shipping Fee -</span> USD {viewRating.data.order.shipping_fee.toLocaleString()}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Quantity -</span> {viewRating.data.order.quantity.toLocaleString()}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Amount -</span> USD {viewRating.data.order.amount.toLocaleString()}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Payment Method -</span> {viewRating.data.order.payment_method}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Paid -</span> {
+																viewRating.data.order.paid ?
+																	<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
+																	<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
+															}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Shipped -</span> {
+																viewRating.data.order.shipped ?
+																	<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
+																	<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
+															}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Ratingd -</span> {
+																viewRating.data.order.ratingd ?
+																	<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
+																	<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
+															}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Delivery Status - </span>
+																{
+																	viewRating.data.order.delivery_status === "Completed" || viewRating.data.order.delivery_status === "Paid" || viewRating.data.order.delivery_status === "Shipped" || viewRating.data.order.delivery_status === "Refunded" ?
+																		<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
+																}
+																{
+																	viewRating.data.order.delivery_status === "Processing" || viewRating.data.order.delivery_status === "Ratingd" ?
+																		<span className='xui-badge xui-badge-warning xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
+																}
+																{
+																	viewRating.data.order.delivery_status === "Shipping" || viewRating.data.order.delivery_status === "Received" || viewRating.data.order.delivery_status === "Refund" ?
+																		<span className='xui-badge xui-badge-info xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
+																}
+																{
+																	viewRating.data.order.delivery_status === "Cancelled" || viewRating.data.order.delivery_status === "Refund Denied" ?
+																		<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>{viewRating.data.order.delivery_status}</span> : ""
+																}
+															</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Created</span> - {viewRating.data.order.createdAt}</p>
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Last Updated</span> - {viewRating.data.order.updatedAt}</p>
+														</>
+														: <span>No order Data</span>
+												}
 											</div>
 										</div>
 										<center>
@@ -671,14 +700,14 @@ export default function Ratings() {
 											} */}
 										</center>
 										{
-											viewRating.data.order.product.product_images === null || !viewRating.data.order.product.product_images ?
+											viewRating.data.product.product_images === null || !viewRating.data.product.product_images ?
 												<center>No image</center> :
 												<>
 													<div className='xui-d-grid xui-grid-col-1 xui-lg-grid-col-3 xui-md-grid-col-3 xui-grid-gap-1 xui-lg-grid-gap-2 xui-mb-2'>
 														{
 															thumbnailImages.map((image, index) => (
 																<div>
-																	<img key={index} className={`thumbnail-image xui-w-fluid-100 xui-lg-h-200 xui-h-100 ${selectedImage === image ? 'selected' : ''}`} src={image} xui-img-src={image} alt={viewRating.data.order.product.name + ` Image ${index + 1}`} onClick={() => handleThumbnailClick(image)} />
+																	<img key={index} className={`thumbnail-image xui-w-fluid-100 xui-lg-h-200 xui-h-100 ${selectedImage === image ? 'selected' : ''}`} src={image} xui-img-src={image} alt={viewRating.data.product.name + ` Image ${index + 1}`} onClick={() => handleThumbnailClick(image)} />
 																	<p className="xui-opacity-4 xui-font-sz-100 xui-m-half xui-cursor-pointer xui-text-dc-underline" onClick={() => {
 																		showPreview(image);
 																	}}><span className="xui-font-w-bold">Click to view</span></p>
