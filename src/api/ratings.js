@@ -65,6 +65,25 @@ const getRating = async function (key, payload) {
 	}
 };
 
+const addRating = async function (key, payload) {
+	try {
+		const response = await axios.post(
+			`${config.baseAPIurl}/add/multiple/ratings`,
+			{
+				...payload
+			},
+			{
+				headers: {
+					'ecommerce-access-key': key
+				}
+			}
+		);
+		return { err: false, data: response.data };
+	} catch (error) {
+		return { err: true, error, response_code: error.response.status };
+	}
+};
+
 const deleteRating = async function (key, payload) {
 	try {
 		const response = await axios.delete(
@@ -82,4 +101,4 @@ const deleteRating = async function (key, payload) {
 	}
 };
 
-export { getRatings, getRatingsViaOrder, getRatingsViaProduct, getRating, deleteRating };
+export { getRatings, getRatingsViaOrder, getRatingsViaProduct, getRating, deleteRating, addRating };
