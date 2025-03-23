@@ -15,7 +15,7 @@ import Copy from "../icons/Copy";
 import useCookie from "../hooks/useCookie";
 import { config } from "../config";
 import { getRatings, getRatingsViaOrder, getRatingsViaProduct, getRating } from "../api/ratings";
-import { useDeleteRating } from "../hooks/useRatings";
+import { useAddRating, useDeleteRating } from "../hooks/useRatings";
 import Loading from "../icons/Loading";
 import Filter from "../icons/Filter";
 import EyeOpen from "../icons/EyeOpen";
@@ -28,6 +28,12 @@ export default function Ratings() {
 	const [textCopied, setTextCopied] = useState(null);
 
 	const [currentFunction, setCurrentFunction] = useState("getAllRatings");
+
+	const {
+		description, errorAddRating, fullname, handleAddRating, handleDescription, handleFullname, handleProductUniqueId, 
+		handleRating, loadingAddRating, productUniqueId, rating, removeAddRatingModal, setDescription, setFullname, 
+		setProductUniqueId, setRating, setRemoveAddRatingModal, successAddRating
+	} = useAddRating();
 
 	const {
 		errorDeleteRating, handleDeleteRating, loadingDeleteRating, removeDeleteRatingModal, setUniqueId: DeleteUniqueId,
@@ -231,6 +237,13 @@ export default function Ratings() {
 		setRemoveProductFilterModal(null);
 	}
 
+	if (removeAddRatingModal) {
+		const modalResponse = document.querySelector("#addRatingModal");
+		modalResponse.setAttribute("display", false);
+		callLastRatingFunction();
+		setRemoveAddRatingModal(null);
+	}
+
 	if (removeDeleteRatingModal) {
 		const modalResponse = document.querySelector("#deleteRatingModal");
 		modalResponse.setAttribute("display", false);
@@ -305,6 +318,14 @@ export default function Ratings() {
 									<button className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-80" xui-modal-open="filterByProduct">
 										<span className="xui-mr-half">Product</span>
 										<Search width="15" height="15" />
+									</button>
+								</div>
+							</div>
+							<div className="xui-mb-1">
+								<div className='xui-d-inline-flex'>
+									<button className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-80" xui-modal-open="addRatingModal">
+										<span className="xui-mr-half">Add Rating</span>
+										<Plus width="15" height="15" />
 									</button>
 								</div>
 							</div>
@@ -394,8 +415,16 @@ export default function Ratings() {
 															<td className='xui-opacity-5'>
 																<span>{data.product.category.name}</span>
 															</td>
-															<td className='xui-opacity-5'>
+															{/* <td className='xui-opacity-5'>
 																<span>{data.product.name} ({data.product.remaining}/{data.product.quantity})</span>
+															</td> */}
+															<td className='xui-opacity-5'>
+																<div className='xui-d-inline-flex xui-flex-ai-center'>
+																	<span>{data.product.name} ({data.product.remaining}/{data.product.quantity})</span>
+																	<span title="Copy Product Unique ID" className="xui-cursor-pointer xui-ml-1" onClick={() => { copyText(data.product_unique_id); setTextCopied(data.product_unique_id); }}>
+																		{copiedText && textCopied === data.product_unique_id ? <Check width="16" height="16" /> : <Copy width="16" height="16" />}
+																	</span>
+																</div>
 															</td>
 															<td className=''>
 																{
@@ -619,6 +648,7 @@ export default function Ratings() {
 														<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">No user</p>
 												}
 												<hr></hr>
+												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">Fullname: <span className="xui-font-w-bold">{viewRating.data.fullname}</span> </p>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">Rating: <span className="xui-font-w-bold">{ratings.find((e) => e.value === viewRating.data.rating).rate} ({viewRating.data.rating})</span> </p>
 												<hr></hr>
 												<p className="xui-opacity-4 xui-font-sz-100 xui-m-half" style={{ textDecoration: "underline" }}>Description: </p>
@@ -655,7 +685,7 @@ export default function Ratings() {
 																	<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
 																	<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
 															}</p>
-															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Ratingd -</span> {
+															<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Rating -</span> {
 																viewRating.data.order.ratingd ?
 																	<span className='xui-badge xui-badge-success xui-font-sz-80 xui-bdr-rad-half'>Yes</span> :
 																	<span className='xui-badge xui-badge-danger xui-font-sz-80 xui-bdr-rad-half'>No</span>
@@ -728,6 +758,46 @@ export default function Ratings() {
 									</div>
 							)
 					}
+				</div>
+			</section>
+			<section className='xui-modal' xui-modal="addRatingModal" id="addRatingModal">
+				<div className='xui-modal-content xui-max-h-500 xui-overflow-auto xui-pos-relative'>
+					<div className="xui-w-40 xui-h-40 xui-bdr-rad-circle xui-d-flex xui-flex-ai-center xui-flex-jc-center psc-bg xui-text-white psc-modal-close" xui-modal-close="addRatingModal">
+						<Close width="24" height="24" />
+					</div>
+					<h1>Create new Rating</h1>
+					<form className="xui-form" layout="2" onSubmit={handleAddRating}>
+						<div className="xui-form-box xui-mt-2">
+							<label>Product Unique Id</label>
+							<input className="xui-font-sz-90" type="text" value={productUniqueId} onChange={handleProductUniqueId} required placeholder="Enter/Paste product unique id "></input>
+						</div>
+						<div className="xui-form-box xui-mt-2">
+							<label>Fullname</label>
+							<input className="xui-font-sz-90" type="text" value={fullname} onChange={handleFullname} required placeholder="Enter fullname"></input>
+						</div>
+						<div className="xui-form-box xui-mt-2">
+							<label>Rating - {rating ? ratings.find((e) => e.value === parseInt(rating)).rate + " (" + rating + ")" : <span className="xui-text-red">None</span> }</label>
+							{/* <input className="xui-font-sz-90" type="number" min={1} max={5} value={rating} onChange={handleRating} required placeholder="Enter rating of product"></input> */}
+							<input className="xui-font-sz-90" type="range" title={rating} min={1} max={5} value={rating} onChange={handleRating} required placeholder="Choose rating of product"></input>
+						</div>
+						<div className="xui-form-box xui-mt-2">
+							<label>Description</label>
+							<textarea type={"text"} required placeholder={"Enter description"} value={description} onChange={handleDescription}></textarea>
+						</div>
+						<div className="xui-form-box xui-d-flex xui-flex-jc-flex-end">
+							<button disabled={loadingAddRating} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-85">
+								<span className="xui-mr-half">Save Rating</span>
+								{
+									loadingAddRating ?
+										<Loading width="12" height="12" />
+										: <Arrowright width="12" height="12" />
+								}
+							</button>
+						</div>
+					</form>
+
+					<p className="xui-font-sz-100 xui-my-1 xui-text-center xui-text-red"><span className="xui-font-w-bold psc-text-red">{errorAddRating}</span></p>
+					<p className="xui-font-sz-100 xui-my-1 xui-text-center xui-text-green"><span className="xui-font-w-bold psc-text-red">{successAddRating}</span></p>
 				</div>
 			</section>
 			<section className='xui-modal' xui-modal="deleteRatingModal" id="deleteRatingModal">
