@@ -538,7 +538,7 @@ export default function Products() {
 																		<Image width="20" height="20" />
 																	</button>
 																	<button title="Delete Product" onClick={() => { DeleteProductSetUniqueId(data.unique_id); }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-red xui-bdr-rad-half xui-font-sz-50" xui-modal-open="deleteProductModal">
-																		<Delete width="16" height="16" />
+																		<Delete width="20" height="20" />
 																	</button>
 																</div>
 															</td>
