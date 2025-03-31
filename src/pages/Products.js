@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import MarkdownPreview from "@uiw/react-markdown-preview";
 import SuccessTick from "../assets/images/success-tick.png";
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
@@ -687,23 +688,30 @@ export default function Products() {
 											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Price -</span> USD {viewProduct.data.sales_price ? <>{viewProduct.data.sales_price.toLocaleString()} <s> USD {viewProduct.data.price.toLocaleString()}</s> </> : viewProduct.data.price.toLocaleString()}</p>
 											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Remaining / Quantity (Max Quantity) -</span> {viewProduct.data.remaining.toLocaleString()} / {viewProduct.data.quantity.toLocaleString()} ({viewProduct.data.max_quantity.toLocaleString()})</p>
 											<hr></hr>
-											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">Specification: </p>
+											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Specification: </span></p>
 											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">
-												<span className="xui-font-w-bold">
-													{/* {
+												{/* <span className="xui-font-w-bold">
+													{
 														getObjectValues(viewProduct.data.specification).map(val => {
 															return val;
 														})
-													} */}
+													}
 													{viewProduct.data.specification}
-												</span>
+												</span> */}
+												<div data-color-mode="light">
+													<MarkdownPreview source={viewProduct.data.specification} />
+												</div>
 											</p>
 											<hr></hr>
 											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Views -</span> {viewProduct.data.views.toLocaleString()}</p>
 											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Favorites -</span> {viewProduct.data.favorites.toLocaleString()}</p>
 											<hr></hr>
-											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">Description: </p>
-											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">{viewProduct.data.description}</p>
+											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Description: </span></p>
+											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half">
+												<div data-color-mode="light">
+													<MarkdownPreview source={viewProduct.data.description} />
+												</div>
+											</p>
 											<hr></hr>
 											<p className="xui-opacity-4 xui-font-sz-100 xui-m-half"><span className="xui-font-w-bold">Status - </span> 
 												{
