@@ -274,7 +274,7 @@ export default function AppDefaults() {
 															</td>
 															<td className=''>
 																<div className="xui-d-flex xui-grid-gap-1">
-																	<button title="Edit App Default" onClick={() => { EditUniqueId(data.unique_id); EditSetCriteria(data.criteria); EditSetDataType(data.data_type); EditSetValue(data.data_type === "ARRAY" || data.data_type === "MAP" ? JSON.stringify(data.value) : data.data_type === "BOOLEAN" ? (data.value ? "TRUE" : "FALSE") : data.data_type === "STRING" ? data.value : parseInt(data.value)); setArrayDataType(data.data_type === "ARRAY" && typeof data.value[0] === "string" ? "STRING" : "MAP"); }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="editAppDefaultModal">
+																	<button title="Edit App Default" onClick={() => { EditUniqueId(data.unique_id); EditSetCriteria(data.criteria); EditSetDataType(data.data_type); EditSetValue(data.data_type === "ARRAY" || data.data_type === "MAP" ? JSON.stringify(data.value) : data.data_type === "BOOLEAN" ? (data.value ? "TRUE" : "FALSE") : data.data_type === "STRING" ? data.value : parseInt(data.value)); setArrayDataType(data.data_type === "ARRAY" && typeof data.value[0] === "string" ? "STRING" : "MAP"); }} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="editAppDefaultModal">
 																		<Edit width="16" height="16" />
 																	</button>
 																	<button title="Delete App Default" onClick={() => { DeleteUniqueId(data.unique_id); }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-red xui-bdr-rad-half xui-font-sz-50" xui-modal-open="deleteAppDefaultModal">

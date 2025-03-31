@@ -589,7 +589,7 @@ export default function Transactions() {
 																							account_number: allTransactions.data.user.account_number, 
 																							bank: allTransactions.data.user.bank 
 																						}); 
-																				}} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="userBankDetailsModal">
+																				}} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="userBankDetailsModal">
 																				<EyeOpenAlt width="20" height="20" />
 																			</button> :
 																			""

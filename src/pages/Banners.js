@@ -237,7 +237,7 @@ export default function Banners() {
 															</td>
 															<td className=''>
 																<div className="xui-d-flex xui-grid-gap-1">
-																	<button title="Edit Banner" onClick={() => { UploadBannerImageUniqueId(data.unique_id); EditUniqueIdDetails(data.unique_id); getABanner(data.unique_id) }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="editBannerModal">
+																	<button title="Edit Banner" onClick={() => { UploadBannerImageUniqueId(data.unique_id); EditUniqueIdDetails(data.unique_id); getABanner(data.unique_id) }} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="editBannerModal">
 																		<Edit width="20" height="20" />
 																	</button>
 																	<button title="Delete Banner" onClick={() => { DeleteUniqueId(data.unique_id); }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-red xui-bdr-rad-half xui-font-sz-50" xui-modal-open="deleteBannerModal">

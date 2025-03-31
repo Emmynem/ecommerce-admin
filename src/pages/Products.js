@@ -522,10 +522,10 @@ export default function Products() {
 																	<button title="View Product Full Details"
 																		onClick={() => {
 																			getAProduct(data.unique_id);
-																		}} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewProductModal">
+																		}} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewProductModal">
 																		<EyeOpenAlt width="20" height="20" />
 																	</button>
-																	<Link to={`/internal/product/edit/details?unique_id=${data.unique_id}`} className="xui-text-dc-none xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50">
+																	<Link to={`/internal/product/edit/details?unique_id=${data.unique_id}`} className="xui-text-dc-none xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50">
 																		<Edit width="20" height="20" />
 																	</Link>
 																	<button title="Product Images"
@@ -533,7 +533,7 @@ export default function Products() {
 																			UploadProductImagesSetProductUniqueId(data.unique_id);
 																			getAProduct(data.unique_id)
 																		}}
-																		className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewProductImagesModal">
+																		className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewProductImagesModal">
 																		<Image width="20" height="20" />
 																	</button>
 																	<button title="Delete Product" onClick={() => { DeleteProductSetUniqueId(data.unique_id); }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-red xui-bdr-rad-half xui-font-sz-50" xui-modal-open="deleteProductModal">

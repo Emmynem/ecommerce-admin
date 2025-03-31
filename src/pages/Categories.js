@@ -236,7 +236,7 @@ export default function Categories() {
 															</td>
 															<td className=''>
 																<div className="xui-d-flex xui-grid-gap-1">
-																	<button title="Edit Category" onClick={() => { UploadCategoryImageUniqueId(data.unique_id); EditUniqueIdDetails(data.unique_id); getACategory(data.unique_id) }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="editCategoryModal">
+																	<button title="Edit Category" onClick={() => { UploadCategoryImageUniqueId(data.unique_id); EditUniqueIdDetails(data.unique_id); getACategory(data.unique_id) }} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="editCategoryModal">
 																		<Edit width="20" height="20" />
 																	</button>
 																	<button title="Delete Category" onClick={() => { DeleteUniqueId(data.unique_id); }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-red xui-bdr-rad-half xui-font-sz-50" xui-modal-open="deleteCategoryModal">

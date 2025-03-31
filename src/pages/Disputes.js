@@ -361,7 +361,7 @@ export default function Disputes() {
 																	<button title="View Dispute Full Details"
 																		onClick={() => {
 																			getADispute(data.unique_id);
-																		}} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewDisputeModal">
+																		}} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewDisputeModal">
 																		<EyeOpenAlt width="20" height="20" />
 																	</button>
 																</div>

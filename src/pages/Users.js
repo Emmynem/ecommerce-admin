@@ -265,7 +265,7 @@ export default function Users() {
 															</td>
 															<td className=''>
 																<div className="xui-d-flex xui-grid-gap-1">
-																	<button title="View User Details" onClick={() => { getUserDetails(data.user_unique_id) }} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewUserDetailsModal">
+																	<button title="View User Details" onClick={() => { getUserDetails(data.user_unique_id) }} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewUserDetailsModal">
 																		<EyeOpenAlt width="16" height="16" />
 																	</button>
 																</div>

@@ -781,7 +781,7 @@ export default function Orders() {
 																	<button title="View Order Full Details"
 																		onClick={() => {
 																			getAnOrder(data.unique_id);
-																		}} className="xui-d-inline-flex xui-flex-ai-center xui-btn psc-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewOrderModal">
+																		}} className="xui-d-inline-flex xui-flex-ai-center xui-btn xui-btn-blue xui-bdr-rad-half xui-font-sz-50" xui-modal-open="viewOrderModal">
 																		<EyeOpenAlt width="20" height="20" />
 																	</button>
 																</div>
