@@ -5,7 +5,7 @@ const {
 const EMAIL_REGEX = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
 const baseAPIurl = "https://api.computehaven.com";
 // const baseAPIurl = "http://localhost:831"; // for test
-const clouderUrl = "https://api.clouder.xnyder.com";
+const clouderUrl = "https://clouderapi.xnyder.com";
 
 const random_numbers = (length) => {
 	if (length === undefined || length === null || length === 0) {
